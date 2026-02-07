@@ -7,6 +7,12 @@ services:
       context: ./database
       dockerfile: Dockerfile
     container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: shopdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: rootpass
+
     ports:
       - "3306:3306"
     volumes:
