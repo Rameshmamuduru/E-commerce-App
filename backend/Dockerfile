@@ -4,15 +4,14 @@ LABEL maintainer="Ramesh Mamuduru"
 LABEL description="Dockerfile for Backend of E-commerce App"
 
 WORKDIR /app
-RUN npm install -g pm2
-RUN npm -v
 
 COPY package*.json ./
-RUN  npm install
+RUN npm install
 
-RUN pm2 start npm --name "backend" -- start
-RUN pm2 status
-RUN pm2 startup
-RUN pm2 save
+RUN npm install -g pm2
+
+COPY . .
 
 EXPOSE 3000
+
+CMD ["pm2-runtime", "npm", "--", "start"]
