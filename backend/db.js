@@ -1,7 +1,7 @@
 const mysql = require("mysql2");
 
 const db = mysql.createPool({
-  host: "mysql",
+  host: "mysql",          // docker service name
   user: "appuser",
   password: "rootpass",
   database: "shopdb",
@@ -10,21 +10,13 @@ const db = mysql.createPool({
   queueLimit: 0
 });
 
+// Test DB connection once on startup
+db.query("SELECT 1", (err) => {
+  if (err) {
+    console.error("MySQL Connection Failed:", err);
+  } else {
+    console.log("MySQL Connected");
+  }
+});
+
 module.exports = db;
-
-
-function connectWithRetry() {
-  const db = mysql.createConnection(config);
-
-  db.connect(err => {
-    if (err) {
-      console.error("MySQL not ready... retrying in 5 seconds");
-      setTimeout(connectWithRetry, 5000);
-    } else {
-      console.log("MySQL Connected");
-      module.exports = db;
-    }
-  });
-}
-
-connectWithRetry();
