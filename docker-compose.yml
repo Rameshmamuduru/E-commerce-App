@@ -12,7 +12,6 @@ services:
       MYSQL_DATABASE: shopdb
       MYSQL_USER: appuser
       MYSQL_PASSWORD: rootpass
-
     ports:
       - "3306:3306"
     volumes:
@@ -25,7 +24,9 @@ services:
     container_name: backend
     ports:
       - "3000:3000"
-    
+    depends_on:
+      - mysql
+
   frontend:
     build:
       context: ./frontend
@@ -33,6 +34,8 @@ services:
     container_name: frontend
     ports:
       - "80:80"
+    depends_on:
+      - backend
 
 volumes:
   sql_data:
